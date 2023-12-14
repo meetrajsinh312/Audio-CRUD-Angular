@@ -1,0 +1,26 @@
+<button class="btn btn-success" (click)="addSongPopup()">
+    Add Song
+</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th *ngFor="let column of tableColumns" scope="col">{{column.name}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let data of songsData">
+            <td *ngFor="let column of tableColumns">
+                <span *ngIf="column.type == 'text'">{{data[column.value]}}</span>
+                <img [src]="data[column.value]" *ngIf="column.type == 'img'" />
+                <audio controls *ngIf="column.type == 'audio'">
+                    <source [src]="data[column.value]" type="audio/ogg">
+                </audio>
+            </td>
+            <td>
+                <button (click)="editSong(data._id)" class="p-1 m-1 btn btn-primary">Edit</button>
+                <button (click)="deleteSong(data._id)" class="p-1 m-1 btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

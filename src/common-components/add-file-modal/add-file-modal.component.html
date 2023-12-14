@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add Product</h4>
+    <button type="button" class="btn-close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+    <form [formGroup]="addSongForm">
+        <div class="input-group mb-1" *ngFor="let field of formArray">
+
+            <ng-container [ngSwitch]="field.type">
+                <!-- Text field  block-->
+                <div class="w-100" *ngSwitchCase="'textField'">
+                    <label class="small">{{field.label}}</label>
+                    <div>
+                        <input class="form-control w-100" type="text" placeholder="{{field.placeholder}}"
+                            formControlName="{{field.formControlName}}" />
+                    </div>
+                </div>
+
+                <div class="w-100" *ngSwitchCase="'imageFile'">
+                    <label class="small">{{field.label}}</label>
+                    <div>
+                        <input (change)="onImageFileSelect($event)" class="form-control w-100" type="file"
+                            accept="image/*" placeholder="{{field.placeholder}}"
+                            formControlName="{{field.formControlName}}" name="{{field.formControlName}}" />
+                    </div>
+                </div>
+
+                <div class="w-100" *ngSwitchCase="'audioFile'">
+                    <label class="small">{{field.label}}</label>
+                    <div>
+                        <input (change)="onAudioFileSelect($event)" class="form-control w-100" type="file"
+                            accept="audio/*" placeholder="{{field.placeholder}}"
+                            formControlName="{{field.formControlName}}" name="{{field.formControlName}}" />
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Error block -->
+            <div class="text-danger small" *ngIf="isSubmitted &&
+            addSongForm.get(field.formControlName)?.hasError('required')">
+                {{field.reqErrMsg}}
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="onSubmit()">Save</button>
+</div>
